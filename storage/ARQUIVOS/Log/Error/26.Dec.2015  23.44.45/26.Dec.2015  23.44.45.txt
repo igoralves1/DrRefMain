@@ -1,9 +1,0 @@
->>>>>  Mensagem de erro:  <<<<< 
- 
-Data:     26.Dec.2015  23.44.45 
-
-Msg:     SQLSTATE[42S02]: Base table or view not found: 1146 Table 'dr2016.array' doesn't exist 
-  
-Sql:       SELECT * FROM  COUNTRY, Array  
-
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

@@ -1,9 +1,0 @@
->>>>>  Mensagem de erro:  <<<<< 
- 
-Data:     20.Sep.2015  06.39.03 
-
-Msg:     SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1 
-  
-Sql:       SELECT * FROM   
-
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

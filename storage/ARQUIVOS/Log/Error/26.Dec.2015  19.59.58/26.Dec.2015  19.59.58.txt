@@ -1,9 +1,0 @@
->>>>>  Mensagem de erro:  <<<<< 
- 
-Data:     26.Dec.2015  19.59.58 
-
-Msg:     SQLSTATE[42S22]: Column not found: 1054 Unknown column 'Brasil' in 'field list' 
-  
-Sql:       INSERT INTO  COUNTRY VALUES  (NULL,Brasil,Bra) ,(NULL,Canada,Can)  ; 
-
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
