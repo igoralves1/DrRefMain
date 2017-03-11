@@ -1,0 +1,9 @@
+>>>>>  Mensagem de erro:  <<<<< 
+ 
+Data:     20.Sep.2015  06.34.41 
+
+Msg:     SQLSTATE[42S22]: Column not found: 1054 Unknown column 'city' in 'field list' 
+  
+Sql:       SELECT city FROM city city 
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
