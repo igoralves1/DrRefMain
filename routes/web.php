@@ -1,36 +1,14 @@
 <?php
 
-Route::get('/', function () {
-    return view('home');//Home do website
-});
-
-
-
-Route::group(['prefix'=>'videos'], function (){
-
-    Route::get('/', function () {
-        return "todos os videos";//Todos os videos
-    });
-    Route::get('/{id}', function ($id) {
-        return "Video => $id";//Um video especifico
-    });
-
-});
-
-Route::group(['prefix'=>'articles'], function (){
-
-    Route::get('/', function () {
-        return "todos os articles";//Todos os videos
-    });
-    Route::get('/{id}', function ($id) {
-        return "Article => $id";//Um video especifico
-    });
-
-});
+//Route::get('/', function () {
+//    return view('home');//Home do website public
+//});
 
 
 Route::get('/listCity','ProfessionalController@listCity');
-Route::get('/getCity/{id}',['uses'=>'ProfessionalController@getCity']);
+Route::get('/getCity/{id}',['uses'=>'ProfessionalController@getCity'])->where('id', '[0-9]+');
+Route::get('/reqTest1',['uses'=>'ProfessionalController@reqTest1']);
+Route::get('/reqTest2',['uses'=>'ProfessionalController@reqTest2']);
 
 
 //https://laravel.com/docs/5.4/routing#route-group-sub-domain-routing
@@ -55,86 +33,137 @@ Route::get('/getCity/{id}',['uses'=>'ProfessionalController@getCity']);
 //
 //})->where('username', '[A-Za-z]+');//End of Route::group(['prefix'=>'user'], function (){
 
+
+
+
+
+
+//==============================================================================
+
+
 Route::group(['prefix'=>'{account}'], function (){
-
-    Route::get('/', function ($account) {
-        return view('homeclientpublic');//Home do website
-    });
-
-    Route::group(['prefix'=>'patientezone'], function (){
-        Route::get('/', function ($account) {
-           return "user $account - all patientezone";//Ex myService.com/Paul/videos
-        });
-
-        Route::get('/{id}', function ($account, $id) {
-           return "user $account patientezone => $id";//Ex myService.com/Paul/videos/id
-        });
-        //Mostrar informacoes importante para o paciente
-        //ter uma lista de procedimentos.
-        //o profissional escolhe qual recomendacao sera enviada para o seu paciente
-    });
     
-    Route::group(['prefix'=>'videos'], function (){
-        Route::get('/', function ($account) {
-           return "user $account - all videos";//Ex myService.com/Paul/videos
-        });
+    Route::group(['prefix'=>'{location}'], function (){
 
-        Route::get('/{id}', function ($account, $id) {
-           return "user $account video => $id";//Ex myService.com/Paul/videos/id
+
+        Route::get('/home', function ($account,$location) { 
+            $loc=explode("_", $location);
+            $locale = $loc[0];
+            $lang= $loc[1]; 
+            App::setLocale($lang);
+            return view('homeProfPublic')->with(['account' => $account,'active' => 'home','lang'=>$lang,"locale"=>$locale]);  
         });
         
-        //mostrar videos criados pelo profissional
-    });
+        Route::group(['prefix'=>'patientezone'], function (){
+        /*
+          Mostrar informacoes importante para o paciente
+          ter uma lista de procedimentos.
+          o profissional escolhe qual recomendacao sera enviada para o seu paciente     
+         */
+            Route::group(['prefix'=>'postopinstructions'], function (){
+                Route::get('/', function ($account,$location) {
+                    App::setLocale($lang);
+                    return view('postopinstructionsClientPublic')->with(['account' => $account,'active' => 'patientezone','lang'=>$lang]); 
+                });
+                Route::get('/{id}', function ($account,$location,$id) {
+                    return view('postopinstructionsClientPublic')->with(['account' => $account,'active' => 'patientezone','lang'=>$lang]); 
+                });
 
-    Route::group(['prefix'=>'articles'], function (){
-        Route::get('/', function ($account) {
-           return "user $account - all articles";//Ex myService.com/Paul/articles
+            });
+            Route::group(['prefix'=>'videos'], function (){
+                Route::get('/', function ($account,$location) {
+                    return view('videosClientPublic')->with(['account' => $account,'active' => 'patientezone','lang'=>$lang]); 
+                 });
+                Route::get('/{id}', function ($account,$location,$id) {
+                    return view('videosClientPublic')->with(['account' => $account,'active' => 'patientezone','lang'=>$lang]); 
+                 });
+
+            });        
+            Route::group(['prefix'=>'articles'], function (){
+                Route::get('/', function ($account,$location) {
+                   return view('articlesClientPublic')->with(['account' => $account,'active' => 'patientezone','lang'=>$lang]); 
+                });
+                Route::get('/{id}', function ($account,$location,$id) {
+                    return view('articlesClientPublic')->with(['account' => $account,'active' => 'patientezone','lang'=>$lang]); 
+                });
+
+            });
+        });   
+
+        Route::group(['prefix'=>'services'], function (){
+            Route::get('/', function ($account,$location) {
+                return view('servicesClientPublic')->with(['account' => $account,'active' => 'services','lang'=>$lang]); 
+            });
+    /*
+            Time
+            Fotos da clinica
+            Servicos oferecidos
+
+     */        
+
+        });  
+
+        Route::group(['prefix'=>'latestnews'], function (){
+            Route::get('/', function ($account,$location) {
+               return view('latestnewsClientPublic')->with(['account' => $account,'active' => 'latestnews','lang'=>$lang]); 
+            });
+            /*
+            LATEST NEWS
+            Display time line vertical
+            Pequenas publica;'oes como um blog. Espaco para foto/video texto. poucas linhas
+            */        
+
         });
 
-        Route::get('/{id}', function ($account, $id) {
-           return "user $account articles => $id";//Ex myService.com/Paul/articles/id
-        });
-        //Artigo escrito pelo profissional.
-        //Sera enviado como push para a app movel de cada paciente registrado
-    });
-    
-    Route::group(['prefix'=>'services'], function (){
-        Route::get('/', function ($account) {
-           return "user $account - services";//Ex myService.com/Paul/articles
-        });
-        //Time
-        //Fotos da clinica
-        //Servicos oferecidos
-    });
-    
-    Route::group(['prefix'=>'latestnews'], function (){
-        Route::get('/', function ($account) {
-           return "user $account - LATEST NEWS";//Ex myService.com/Paul/articles
-        });
-        //LATEST NEWS
-        //Display time line vertical
-        //Pequenas publica;'oes como um blog. Espaco para foto/video texto. poucas linhas
-    });
-    
-    Route::group(['prefix'=>'contact'], function (){
-        Route::get('/', function ($account) {
-           return view('contactclientpublic');//Home do website
-           
-        });
-        //Mostrar mapa ou mapas, caso o profissional trabalhe em mais de um consultorio.
-        //Mostrar zona de marcar consulta hora/dia/mes/ano
-        //Enviar e-mail para dminstrador
-    });
-    
-    
-//Nao precisamos do filtro pois so existe 2 cenarios:
-//    1- as paralavras enviadas devrao fazer um match com as urls do sistema de base. tais como video, articles, entre outras.
-//    2- no outro cenario a string sera recuperada dentro de ['prefix'=>'{account}'] para ser testda na base de dados. O filtro para evitar injection sera feito antes de 
-//        fazer a query  na tabela user. Se o nome existe retorna o id do usuario para criar a pagina com od dados pertinentes. se n'ao retorna uma pagina 404'
+        Route::group(['prefix'=>'contact'], function (){
+            Route::get('/', function ($account,$location) {
+                
+               $loc=explode("_", $location);
+               $locale = $loc[0];
+               $lang= $loc[1]; 
+               App::setLocale($lang);
+               return view('contactProfPublic')->with(['account' => $account,'active' => 'contact','lang'=>$lang,"locale"=>$locale]);           
+            });
+            /*
+            Mostrar mapa ou mapas, caso o profissional trabalhe em mais de um consultorio.
+            Mostrar zona de marcar consulta hora/dia/mes/ano
+            Enviar e-mail para dminstrador
+            */
 
+        });    
+
+    /*
+    Nao precisamos do filtro pois so existe 2 cenarios:
+        1- as paralavras enviadas devrao fazer um match com as urls do sistema de base. tais como video, articles, entre outras.
+        2- no outro cenario a string sera recuperada dentro de ['prefix'=>'{account}'] para ser testda na base de dados. O filtro para evitar injection sera feito antes de 
+            fazer a query  na tabela user. Se o nome existe retorna o id do usuario para criar a pagina com od dados pertinentes. se n'ao retorna uma pagina 404'
+
+     */
+
+    });
+    
 });
+//==============================================================================
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//==============================================================================
 Route::group(['prefix'=>'private'], function (){
     Route::group(['prefix'=>'{account}'], function (){
         Route::get('/', function ($account) {
@@ -228,6 +257,27 @@ http://unify/page_contact4.html
 
 
 
+Route::group(['prefix'=>'videos'], function (){
+
+    Route::get('/', function () {
+        return "todos os videos";//Todos os videos
+    });
+    Route::get('/{id}', function ($id) {
+        return "Video => $id";//Um video especifico
+    });
+
+});
+
+Route::group(['prefix'=>'articles'], function (){
+
+    Route::get('/', function () {
+        return "todos os articles";//Todos os videos
+    });
+    Route::get('/{id}', function ($id) {
+        return "Article => $id";//Um video especifico
+    });
+
+});
 
 
 

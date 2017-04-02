@@ -10,7 +10,7 @@ class ProfessionalController extends Controller
 {
     public function listCity()
     {
-        
+              
         $client = new Client(['base_uri' => 'http://drefapi.com/']);  
         $response = $client->request('GET', 'api/user/listCity');
         $body = $response->getBody();
@@ -32,5 +32,14 @@ class ProfessionalController extends Controller
         $content =$body->getContents();
         $arr = json_decode($content,TRUE);
         return $arr;
+    }
+    
+    public function reqTest1(Request $req) {
+        dd($req->path());
+    }
+    public function reqTest2() {
+//        dd("sfg");
+//        dd(Request::route()->getName());
+        dd(Request::capture()->path());
     }
 }
