@@ -45,8 +45,8 @@ Route::group(['prefix'=>'{account}'], function (){
     
     Route::group(['prefix'=>'{location}'], function (){
 
-
-        Route::get('/home', function ($account,$location) { 
+        //http://dref.app/huio/br_pt/contact
+        Route::get('/', function ($account,$location) { 
             $loc=explode("_", $location);
             $locale = $loc[0];
             $lang= $loc[1]; 

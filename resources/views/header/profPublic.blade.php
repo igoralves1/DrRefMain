@@ -1,5 +1,3 @@
-@if($active==\"home\"){{$active=\"\"}}@endif
-
 <!--=== Header ===-->
 <div class="header">
     <div class="container">
