@@ -1,0 +1,19 @@
+<!--
+                    tenho que recuperar tudo depois de    "_en/"
+                    Ex:
+                    mysite.com/joe/us_en/home //(English)
+                    mysite.com/joe/us_en/.... //(English)
+                    mysite.com/joe/us_en/$path //(English)
+                    mysite.com/bob/us_en/clientzone/info //(English)
+                    mysite.com/bob/us_en/$path //(English)
+                    
+                    So substituir abaixo pela variavel $active.
+                    
+                    Na verdade trocar essa variavel pelo path desenjado
+                    <a href="{{ url($account.'/'.$locale.'_en/'.$path) }}">En<i class="@if($lang == 'en') fa fa-check @endif"></i></a>
+                    <a href="{{ url($account.'/'.$locale.'_fr/'.$path) }}">Fr<i class="@if($lang == 'fr') fa  fa-check @endif"></i></a>
+                    <a href="{{ url($account.'/'.$locale.'_pt/'.$path) }}">Pt<i class="@if($lang == 'pt') fa  fa-check @endif"></i></a>
+                    <a href="{{ url($account.'/'.$locale.'_es/'.$path) }}">Sp<i class="@if($lang == 'es') fa  fa-check @endif"></i></a>
+                    
+                    Assim o header sabera a qualquer momento onde o usuari esta navegando e mudara para a mesma rota com o idioma trocado
+                    -->

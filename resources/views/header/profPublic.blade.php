@@ -63,15 +63,15 @@
                 <!-- End Home -->
 
                 <!-- Patiente Zone -->
-                <li class="dropdown @if($active == 'services') active @endif">
+                <li class="dropdown @if($active == 'patientezone') active @endif">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-child"></i>
                         {{ __('header.patienteZone') }}
                     </a>
                     <ul class="dropdown-menu">								
-                        <li><a href="{{ url($account.'/'.$locale.'_'.$lang.'/postopinstructions') }}"><i class="fa  fa-info"></i>{{ __('header.postOpInstructions') }}</a></li>
-                        <li><a href="{{ url($account.'/'.$locale.'_'.$lang.'/articles') }}"><i class="fa  fa-file-text-o"></i>{{ __('header.articles') }}</a></a></li>
-                        <li><a href="{{ url($account.'/'.$locale.'_'.$lang.'/videos') }}"><i class="fa  fa-video-camera"></i>{{ __('header.videos') }}</a></a></li>
+                        <li><a href="{{ url($account.'/'.$locale.'_'.$lang.'/patientezone/postopinstructions') }}"><i class="fa  fa-info"></i>{{ __('header.postOpInstructions') }}</a></li>
+                        <li><a href="{{ url($account.'/'.$locale.'_'.$lang.'/patientezone/articles') }}"><i class="fa  fa-file-text-o"></i>{{ __('header.articles') }}</a></a></li>
+                        <li><a href="{{ url($account.'/'.$locale.'_'.$lang.'/patientezone/videos') }}"><i class="fa  fa-video-camera"></i>{{ __('header.videos') }}</a></a></li>
                     </ul>
                 </li>
                 <!-- End Patiente Zone -->
